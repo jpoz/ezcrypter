@@ -68,7 +68,7 @@ Initialize the key with raw unencoded binary key data. This needs to be at least
     def initialize(raw,options = {})
       @raw=raw
       @algorithm=options[:algorithm]||"aes-128-cbc"
-      @iv=options[:iv]||"OpenSSL for Ruby"
+      @iv=options[:iv]||nil
     end
 
 =begin rdoc
@@ -429,7 +429,7 @@ Warning! The interface may change.
 =begin rdoc
   
 =end
-    def initialize(key,target,mode,algorithm, iv='OpenSSL for Ruby')
+    def initialize(key,target,mode,algorithm, iv=nil)
       @cipher = OpenSSL::Cipher::Cipher.new(algorithm)  
       if mode
         @cipher.encrypt
@@ -437,7 +437,7 @@ Warning! The interface may change.
         @cipher.decrypt
       end
       @cipher.key=key.raw
-      @cipher.iv = iv
+      @cipher.iv = iv if iv
       @cipher.padding=1
       @target=target
       @finished=false
@@ -504,7 +504,7 @@ Warning! The interface may change.
 =begin rdoc
   
 =end
-    def initialize(key,target="",algorithm="aes-128-cbc",iv="OpenSSL for Ruby")
+    def initialize(key,target="",algorithm="aes-128-cbc",iv=nil)
       super(key,target,true,algorithm,iv)
     end
     
@@ -527,7 +527,7 @@ Warning! The interface may change.
 =begin rdoc
   
 =end
-    def initialize(key,target="",algorithm="aes-128-cbc",iv="OpenSSL for Ruby")
+    def initialize(key,target="",algorithm="aes-128-cbc",iv=nil)
       super(key,target,false,algorithm,iv)
     end
     
